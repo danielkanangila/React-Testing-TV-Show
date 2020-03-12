@@ -5,6 +5,7 @@ import { fetchShow as mockFetchShow } from '../api/fetchShow';
 import App from '../App';
 import Episodes from '../components/Episodes';
 import data from './dataSample';
+import { ExpectedSeasonsSample } from './ExpectedSeasonsSample';
 import { formatSeasons } from '../utils/formatSeasons';
 
 jest.mock('../api/fetchShow');
@@ -22,4 +23,10 @@ test("Renders Episodes components without crashing", async () => {
     const { getAllByTestId } = render(<Episodes episodes={data._embedded.episodes} />)
 
     expect(getAllByTestId(/resolved-episode/i)).toHaveLength(2);
+});
+
+test("Group episodes by seasons", () => {
+    const seasons = formatSeasons(data._embedded.episodes);
+
+    expect(seasons).toEqual(ExpectedSeasonsSample);
 })
